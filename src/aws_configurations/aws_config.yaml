@@ -1,0 +1,43 @@
+aws_access_config:
+  region: ap-south-1
+aws_database_config:
+  allocated_storage: '20'
+  aws_mysql_url: mlops-experiment.ctn6vycs4wym.ap-south-1.rds.amazonaws.com
+  database_name: mlops
+  engine: mysql
+  engine_version: '8.0'
+  identifier: mlops-experiment
+  instance_class: db.t2.micro
+  mysql_instance_name: mlops-experiment-mysql
+  mysql_password: mlops1234
+  mysql_username: admin
+  parameter_group_name: default.mysql8.0
+  publicly_accessible: 'true'
+  security_group_name: mlops-mysql-security-group
+  skip_final_snapshot: 'true'
+  vpc_id: vpc-04988da276151ec45
+aws_ec2_instance_config:
+  ami: ami-0851b76e8b1bce90b
+  availability_zone: ap-south-1
+  instance_type: t2.micro
+  key_name: mlops-server
+  server_cmd: Holder
+aws_ecr_config:
+  docker_image_name: mlops-experiment-app-image
+  image_ecr_url: _image_ecr_url_.dkr.ecr.ap-south-1.amazonaws.com/mlops-experiment-app-image:1.23.1
+
+aws_endpoint_config:
+  experiment_id: '0'
+  model_name: model
+  run_id: 432e73fe5f0745919bb0cf02629f71f3
+
+aws_s3_bucket_config:
+  s3_bucket_name: mlops-experiment-s3
+aws_sagemaker_config:
+  app_name: mlops-experiment-app
+  execution_role_arn: arn:aws:iam::_execution_role_arn_:role/mlops-experiment-role
+  sagemaker_policy_name: mlops-experiment-policy
+  sagemaker_role_name: mlops-experiment-role
+aws_server_config:
+  server_config: mlflow server --backend-store-uri mysql://admin:mlops1234@mlops-experiment.ctn6vycs4wym.ap-south-1.rds.amazonaws.com/mlops --artifacts-destination s3://mlops-experiment-s3 --serve-artifacts --host 0.0.0.0 -p 8080
+  tracking_uri: http://ec2-3-110-162-158.ap-south-1.compute.amazonaws.com:8080
