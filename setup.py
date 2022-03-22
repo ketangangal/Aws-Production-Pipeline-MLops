@@ -4,8 +4,8 @@ with open("README.md", "r", encoding="utf-8") as f:
     long_description = f.read()
 
 # Edit below variables as per your requirements -
-REPO_NAME = "level_2_architecture"
-AUTHOR_USER_NAME = "c17hawke"
+REPO_NAME = "Aws-Production-Pipeline-MLops"
+AUTHOR_USER_NAME = "ketangangal"
 SRC_REPO = "src"
 LIST_OF_REQUIREMENTS = []
 
