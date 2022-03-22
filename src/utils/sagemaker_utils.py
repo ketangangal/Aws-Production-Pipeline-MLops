@@ -8,11 +8,11 @@ from src.utils.get_secrets import secrets
 class sagemaker_integration:
     def __init__(self, config=None):
         self.config = config
-        SECRETS = secrets()
+        self.SECRETS = secrets()
         self.config['aws_sagemaker_config']['execution_role_arn'] = self.config['aws_sagemaker_config'][
-            'execution_role_arn'].replace("_execution_role_arn_", SECRETS["aws_access_config"]["account_id"])
+            'execution_role_arn'].replace("_execution_role_arn_", self.SECRETS["aws_access_config"]["account_id"])
         self.config['aws_ecr_config']['image_ecr_url'] = self.config['aws_ecr_config']['image_ecr_url'].replace(
-            "_image_ecr_url_", SECRETS["aws_access_config"]["account_id"])
+            "_image_ecr_url_", self.SECRETS["aws_access_config"]["account_id"])
 
     def upload(self, path_to_artifact=None):
         try:
@@ -44,7 +44,10 @@ class sagemaker_integration:
 
     def query(self, input_json):
         try:
-            client = boto3.session.Session().client("sagemaker-runtime", self.config['aws_access_config']['region'])
+            client = boto3.session.Session().client("sagemaker-runtime",
+                                                    self.config['aws_access_config']['region'],
+                                                    aws_access_key_id=self.SECRETS['aws_access_config']['access_key'],
+                                                    aws_secret_access_key=self.SECRETS['aws_access_config']['secret_key'])
             response = client.invoke_endpoint(
                 EndpointName=self.config['aws_sagemaker_config']['app_name'],
                 Body=input_json,
